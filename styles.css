@@ -1,0 +1,209 @@
+:root{
+    --clr-primary: rgb(78, 140, 255);
+    --clr-light: white;
+    --clr-dark: rgb(0, 0, 0);
+    --clr-warning: rgb(255, 0, 0);
+    --list-title: 2em;
+}
+
+*,*::after,*::before{
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    margin: 0;
+    font-weight: 300;
+    font-size: 1.5rem;
+    background-color: var(--clr-primary);
+    color:var(--clr-light);
+    display: grid;
+    grid: 
+        "header header header header" auto
+        "...... lists  active ......" auto /
+        1fr minmax(100px,300px) minmax(250px,500px) 1fr;
+    gap:3rem;
+}
+.title{
+    grid-area: header;
+    text-align: center;
+    font-size: calc(7vw + 2rem );
+    font-weight: 900;
+    color: rgba(0,0,0,0.1);
+    margin: -0.3em 0 0.5em;
+}
+.all-tasks{
+    grid-area: lists;
+    
+}
+.task-list-title{
+    
+    font-size: var(--list-title);
+    font-weight: 700;
+}
+.task-list{
+    font-size: 1.2rem;
+    line-height: 1.7;
+    list-style: circle;
+    padding-left: 1.1em;
+}
+.active-list{
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: rgb(124, 250, 61);   
+}
+.list-name{
+    cursor: pointer;
+}
+.list-name:hover{
+    opacity: 0.7;
+}
+form{
+    display: flex;
+}
+.btn{
+    cursor: pointer;
+    background: 0;
+    padding: 0;
+    border: 0;
+    color: inherit;
+}
+.btn.create{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-right: 0.25rem;
+    transition: opacity 250ms ease-in;
+
+}
+.btn.create:hover{
+    opacity: 0.7;
+}
+.new{
+    background: transparent;
+    border: 0;
+    color: inherit;
+    border-bottom: 1px solid currentcolor;
+    /* border-right: 1px solid currentColor; */
+    font-size: inherit;
+    outline: none;
+    order: 2;
+    padding: 0.25rem;
+
+    transition: border-bottom 100ms ease-in;
+}
+.new:focus{
+    border-bottom-width: 5px;
+    /* border-right-width: 5px; */
+    /* border-radius: 13px; */
+}
+.new:focus::placeholder{
+    opacity: 0.2;
+}
+.new.list{
+    font-size: 1.1rem;
+    
+}
+
+.todo-list{
+    --spacer: 2rem;
+    position: relative;
+    grid-area: active;
+    background-color: var(--clr-light);
+    color: var(--clr-dark);
+    border-radius: 25px ;
+    padding-bottom: 3rem;
+}
+.todo-header{
+    padding: var(--spacer);
+    background-color: rgb(200, 200, 200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.list-title{
+    margin: 0px;
+    font-size: var(--list-title);
+}
+.task-count{
+    margin: 0;
+    font-size: 1rem;
+}
+.todo-body{
+    padding: var(--spacer);
+}
+[type="checkbox"]{
+    opacity: 0;
+    position: absolute;
+}
+.task label{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 1.25em;
+}
+.task label::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: -30%;
+    height: 1px;
+    background: currentcolor;
+    opacity: 0.1;
+
+}
+.new.task{
+    margin-bottom: 0;
+
+}
+.new-task-creator .create{
+    color: var(--clr-primary);
+}
+.custom-checkbox{
+    --size: 0.75em;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    margin-right: var(--size);
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 50%;
+    transform: scale(1);
+    transition: transform 300ms ease-in-out;
+}
+.task:hover .custom-checkbox , [type="checkbox"]:focus + label .custom-checkbox{
+    transform: scale(1.2);
+    color: var(--clr-primary);
+
+}
+[type="checkbox"]:checked + label .custom-checkbox{
+    background: var(--clr-primary);
+    background-color: var(--clr-primary);
+    box-shadow: inset 0 0 0px 2px whitesmoke;
+    
+}
+[type="checkbox"]:checked + label{
+    opacity: 0.5;
+    color: var(--clr-primary);
+    text-decoration:line-through;
+}
+
+.delete-stuff{
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -50px;
+    color: var(--clr-light);
+    
+}
+.btn.delete{
+    opacity: 0.7;
+    font-size: 1.5rem;
+    margin-top:50px;
+    transition: color 200ms;
+}
+.btn.delete:hover{
+    color: var(--clr-warning);
+}
