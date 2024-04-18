@@ -2,6 +2,11 @@ const listsContainer = document.querySelector('[data-lists]');
 const newListForm = document.querySelector('[data-new-list-form]');         
 const newListInput = document.querySelector('[data-new-list-input]');
 const deleteListButton = document.querySelector('[data-delete-list-button]');         
+const listDisplayContainer = document.querySelector('[data-list-display-container]');
+const listTitleElement = document.querySelector('[data-list-title]');
+const listCountElement = document.querySelector('[data-list-count]');
+const tasksContainer = document.querySelector('[data-tasks]');
+
 
 const LOCAL_STORAGE_LIST_KEY = 'task.lists'; //storing the list values in the localstroge of browser
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = 'task.selectedlistId'; //to know which item is selected
@@ -28,7 +33,6 @@ deleteListButton.addEventListener('click',e =>{
 newListForm.addEventListener('submit', e =>{
     e.preventDefault();
     const listName =  newListInput.value;
-    lists.push(list);
     if(listName == null || listName === '') return;
     const list = createList(listName);
     newListInput.value = null; //gives the empty todo
@@ -38,8 +42,9 @@ newListForm.addEventListener('submit', e =>{
 })
 
 function createList(name){
-    return {id: Date.now().toString(),/*to get the unique id */name:name,task: []};
+    return {id: Date.now().toString(),name:name,task: []};
 }
+
 function saveAndrender(){
     save();
     render(); 
@@ -52,7 +57,27 @@ function save(){
 function render(){
     //another function def
     clearElement(listsContainer);
+    renderLists();
 
+    const selectedList = lists.find(list => list.id === selectedListId);
+    if (selectedListId == null){
+        listDisplayContainer.style.display = 'none';
+    }else{
+        listDisplayContainer.style.display = '';
+        listTitleElement.innerText = selectedList.name;
+        renderTaskCount(selectedList);
+    }
+}
+////////////////////hold for now///////////////////////////
+function renderTaskCount(selectedList){
+    const incompleteTaskCount = selectedList.tasks.filter(task => !task.complete).length;
+    const taskString = incompleteTaskCount === 1 ? "task" : "tasks";
+    listCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
+}
+
+
+
+function renderLists(){
     lists.forEach(list =>{
         const listElement = document.createElement('li');
         listElement.dataset.listId = list.id;
@@ -63,6 +88,7 @@ function render(){
         }
         listsContainer.appendChild(listElement);
     })
+
 }
 
 function clearElement(element){
